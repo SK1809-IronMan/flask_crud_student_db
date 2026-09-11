@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Edit Student{% endblock %}
+
+{% block content %}
+<h2>Edit Student</h2>
+<form method="POST" class="bg-white p-4 rounded">
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" name="name" class="form-control" value="{{ student.name }}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Roll No</label>
+        <input type="text" name="roll_number" class="form-control" value="{{ student.roll_number }}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Age</label>
+        <input type="number" name="age" class="form-control" value="{{ student.age if student.age else '' }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Department</label>
+        <input type="text" name="department" class="form-control" value="{{ student.department if student.department else '' }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" value="{{ student.email if student.email else '' }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Update Student</button>
+</form>
+{% endblock %}
