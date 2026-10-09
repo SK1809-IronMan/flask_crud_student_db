@@ -20,6 +20,15 @@ The project is built to understand how Flask works with a database and how a com
 9) Implemented the Update operation to edit student details.
 10) Implemented the Delete operation to remove student records.
 11) Tested all CRUD operations to make sure the application was working correctly.
-
+12) Installed Flask-Login and made a User table for storing login details.
+13) Made Register, Login and Logout pages. Passwords are saved as hashes, not plain text.
+14) Added login_required to the student pages so a user has to log in first.
+15) Made two roles, admin and staff. Only the admin can delete students. The first user who registers becomes the admin.
+16) Added validation to the add and edit forms (age range, email format, duplicate roll number). If there is an error, the form keeps what was typed.
+17) Made error pages for 403 and 404.
+18) Added a search box and a department filter on the home page.
+19) Added sorting by clicking the column headings.
+20) Added pagination, 10 students per page.
+21) Added some test students to check search, sorting and paging.
 # **_Result:_**
-A simple Student Database web application was successfully created using Flask.
+The project started as a simple CRUD app. It now also has login with admin and staff roles, form validation, and a student list with search, filter, sorting and pagination.

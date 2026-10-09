@@ -6,23 +6,23 @@
 <form method="POST" class="bg-white p-4 rounded">
     <div class="mb-3">
         <label class="form-label">Name</label>
-        <input type="text" name="name" class="form-control" value="{{ student.name }}" required>
+        <input type="text" name="name" class="form-control" value="{{ form.get('name', student.name) }}" maxlength="120" required>
     </div>
     <div class="mb-3">
         <label class="form-label">Roll No</label>
-        <input type="text" name="roll_number" class="form-control" value="{{ student.roll_number }}" required>
+        <input type="text" name="roll_number" class="form-control" value="{{ form.get('roll_number', student.roll_number) }}" maxlength="30" required>
     </div>
     <div class="mb-3">
         <label class="form-label">Age</label>
-        <input type="number" name="age" class="form-control" value="{{ student.age if student.age else '' }}">
+        <input type="number" name="age" class="form-control" value="{{ form.get('age', student.age if student.age else '') }}" min="5" max="100">
     </div>
     <div class="mb-3">
         <label class="form-label">Department</label>
-        <input type="text" name="department" class="form-control" value="{{ student.department if student.department else '' }}">
+        <input type="text" name="department" class="form-control" value="{{ form.get('department', student.department if student.department else '') }}" maxlength="80">
     </div>
     <div class="mb-3">
         <label class="form-label">Email</label>
-        <input type="email" name="email" class="form-control" value="{{ student.email if student.email else '' }}">
+        <input type="email" name="email" class="form-control" value="{{ form.get('email', student.email if student.email else '') }}" maxlength="120">
     </div>
     <button type="submit" class="btn btn-primary">Update Student</button>
 </form>

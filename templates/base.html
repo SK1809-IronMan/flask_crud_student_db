@@ -9,6 +9,17 @@
 <nav class="navbar navbar-dark bg-dark mb-4">
     <div class="container">
         <a class="navbar-brand" href="{{ url_for('index') }}">🎓 Student Database</a>
+        <div class="d-flex align-items-center">
+            {% if current_user.is_authenticated %}
+            <span class="navbar-text me-3">{{ current_user.username }} ({{ current_user.role }})</span>
+            <form action="{{ url_for('logout') }}" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-sm btn-outline-light">Logout</button>
+            </form>
+            {% else %}
+            <a href="{{ url_for('login') }}" class="btn btn-sm btn-outline-light me-2">Login</a>
+            <a href="{{ url_for('register') }}" class="btn btn-sm btn-light">Register</a>
+            {% endif %}
+        </div>
     </div>
 </nav>
 

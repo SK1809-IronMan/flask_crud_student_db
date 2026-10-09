@@ -7,11 +7,38 @@
     <a href="{{ url_for('add_student') }}" class="btn btn-primary">+ Add Student</a>
 </div>
 
+<form method="GET" class="row g-2 mb-3">
+    <div class="col-md-5">
+        <input type="text" name="q" class="form-control" value="{{ q }}" placeholder="Search name, roll no or email">
+    </div>
+    <div class="col-md-3">
+        <select name="department" class="form-select">
+            <option value="">All departments</option>
+            {% for d in departments %}
+            <option value="{{ d }}" {% if d == department %}selected{% endif %}>{{ d }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-dark">Filter</button>
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Clear</a>
+    </div>
+</form>
+
 {% if students %}
 <table class="table table-bordered bg-white">
     <thead class="table-dark">
     <tr>
-        <th>#</th><th>Name</th><th>Roll No</th><th>Age</th><th>Department</th><th>Email</th><th>Actions</th>
+        <th>#</th>
+        {% for col, label in [('name', 'Name'), ('roll_number', 'Roll No'), ('age', 'Age'), ('department', 'Department')] %}
+        <th>
+            <a href="{{ url_with(sort=col, order='desc' if sort == col and order == 'asc' else 'asc', page=None) }}"
+               class="text-white text-decoration-none">
+                {{ label }}{% if sort == col %} {{ '▲' if order == 'asc' else '▼' }}{% endif %}
+            </a>
+        </th>
+        {% endfor %}
+        <th>Email</th><th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -25,15 +52,40 @@
         <td>{{ student.email if student.email else '-' }}</td>
         <td>
             <a href="{{ url_for('edit_student', student_id=student.id) }}" class="btn btn-sm btn-secondary">Edit</a>
+            {% if current_user.role == 'admin' %}
             <form action="{{ url_for('delete_student', student_id=student.id) }}" method="POST" class="d-inline">
                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
             </form>
+            {% endif %}
         </td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
+
+<div class="d-flex justify-content-between align-items-center">
+    <span class="text-muted">Page {{ pagination.page }} of {{ pagination.pages }} ({{ pagination.total }} students)</span>
+    <nav>
+        <ul class="pagination mb-0">
+            {% if pagination.has_prev %}
+            <li class="page-item"><a class="page-link" href="{{ url_with(page=pagination.prev_num) }}">Prev</a></li>
+            {% endif %}
+            {% for p in pagination.iter_pages() %}
+            {% if p %}
+            <li class="page-item {% if p == pagination.page %}active{% endif %}">
+                <a class="page-link" href="{{ url_with(page=p) }}">{{ p }}</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">…</span></li>
+            {% endif %}
+            {% endfor %}
+            {% if pagination.has_next %}
+            <li class="page-item"><a class="page-link" href="{{ url_with(page=pagination.next_num) }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
 {% else %}
-<p>No students yet.</p>
+<p>{% if q or department %}No students match your search.{% else %}No students yet.{% endif %}</p>
 {% endif %}
 {% endblock %}

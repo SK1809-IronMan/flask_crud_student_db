@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="mx-auto" style="max-width: 420px;">
+    <h2>Create Account</h2>
+    <form method="POST" class="bg-white p-4 rounded">
+        <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" value="{{ username }}" minlength="3" maxlength="50" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" minlength="8" required>
+            <div class="form-text">At least 8 characters.</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Confirm Password</label>
+            <input type="password" name="confirm" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Register</button>
+    </form>
+    <p class="mt-3">Already registered? <a href="{{ url_for('login') }}">Login</a></p>
+</div>
+{% endblock %}
